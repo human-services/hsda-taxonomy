@@ -1,2 +1,4 @@
-# hsda-taxonomy
-This is the repository for the human services data API (HSDA) taxonomy.
+# HSDA
+This is the human services data API (HSDA).
+
+URL: http://developer.open.referral.adopta.agency/
