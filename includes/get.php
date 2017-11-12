@@ -39,7 +39,7 @@ $response_200 = $responses['200'];
 $schema_ref = $response_200['schema']['items']['$ref'];
 $schema = str_replace("#/definitions/","",$schema_ref);
 $schema_properties = $definitions[$schema]['properties'];
-$schema = str_replace("_complete","",$schema);
+$schema = str_replace("_full","",$schema);
 
 $ReturnObject = array();
 
@@ -154,7 +154,7 @@ if($override==0)
 		$Query .= " WHERE" . $where;
 		}
 		
-	if(isset($id) && $id !='complete')
+	if(isset($id) && $id !='full')
 		{
 		$path_count_array = explode("/",$route);	
 		///var_dump($path_count_array);
@@ -164,7 +164,7 @@ if($override==0)
 		//echo "path: " . $core_path . "<br />";
 		//echo "path count: " . $path_count . "<br />";
 		
-		if(isset($id2) && $id2 !='complete')
+		if(isset($id2) && $id2 !='full')
 			{
 			if($path_count == 6)
 				{
@@ -173,7 +173,7 @@ if($override==0)
 			}
 		else
 			{
-			if($path_count == 5 && $path_count_array[2] !='complete')
+			if($path_count == 5 && $path_count_array[2] !='full')
 				{
 				$Query .= " WHERE " . $core_path . "_id = '" . $id . "'";	
 				}

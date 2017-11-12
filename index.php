@@ -15,17 +15,23 @@ $params = $request->params();
 $head = $request->headers();
 
 //foreach ($head as $name => $values) {
-//    echo $name . ": " . $values . "\n\r";
+    //echo $name . ": " . $values . "\n\r";
 //}
 
 if(isset($head['X_APPID'])){ $appid = $head['X_APPID']; } else { $appid = ""; }
 if(isset($head['X_APPKEY'])){ $appkey = $head['X_APPKEY']; } else { $appkey = ""; }
 
-//echo $appid . "<br />";
-//echo $appkey . "<br />";
+//echo "appid: " . $appid . "<br />";
+//echo "appkey: " . $appkey . "<br />";
+
+$admin = 0;
+if($appid == $admin_login && $appkey == $admin_code)
+	{
+	$admin = 1;	
+	}
 
 // Get permissions
-if(($appid!='' && $appkey != '') && ($appid != $admin_login && $appkey != $admin_code))
+if(($appid!='' && $appkey != ''))
 	{
 	$management_base_url = $openapi['hsda-management']['schemes'][0] . '://' . $openapi['hsda-management']['host'] . $openapi['hsda-management']['basePath'];
 	$management_base_url = $management_base_url . 'users/auth/?login=' . $admin_login . '&code=' . $admin_code;	
@@ -71,6 +77,9 @@ foreach($paths as $path => $path_details)
   		//echo $route . ' == ' . $verb . "\n";
   		
   		$extpath = str_replace("/","-",$route);
+  		$extpath = str_replace("{","",$extpath);
+  		$extpath = str_replace("}","",$extpath);
+  		$extpath = str_replace("_","-",$extpath);
   		if(substr($extpath,0,1)=="-"){ $extpath = substr($extpath,1,strlen($extpath)); }
   		if(substr($extpath,strlen($extpath)-1,1)=="-"){ $extpath = substr($extpath,0,strlen($extpath)-1); }
   		$prepath = "pre/" . $extpath . ".php";
@@ -99,7 +108,7 @@ foreach($paths as $path => $path_details)
 			{
 			//echo "default: " . $openapi['hsda-default-system'] . "\n";	
 			//var_dump($user_access[$openapi['hsda-default-system']]);
-		//	echo "setting: " . $user_access[$openapi['hsda-default-system']][$route] . "\n";	
+			//echo "setting: " . $user_access[$openapi['hsda-default-system']][$route] . "\n";	
 			if(isset($user_access[$openapi['hsda-default-system']][$route][$verb]))
 				{
 				$access = 1;	
